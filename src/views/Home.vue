@@ -74,6 +74,21 @@
     </b-row>
 
     <b-row>
+      <b-col>
+        <h3>Results</h3>
+      </b-col>
+    </b-row>
+
+    <b-row v-for="offer in offers" :key="'result' + offer.key">
+      <b-col>
+        Profit
+      </b-col>
+      <b-col>
+        {{ profit(offer) }}
+      </b-col>
+    </b-row>
+
+    <b-row>
       <b-col offset="2" cols="8">
         <turnip-chart>
         </turnip-chart>
@@ -119,6 +134,16 @@ export default {
           sellingPrice: null,
         },
       );
+    },
+    profit(offer) {
+      // - bells spent on turnips
+      // - fee
+      // + turnips * price
+      const turnips = parseInt(this.numberOfTurnips, 10);
+      const turnipPrice = parseInt(offer.sellingPrice, 10);
+      const feeBells = offer.feeType === 'nmt' ? offer.feeAmount * this.bellsPerNMT : offer.feeAmount;
+
+      return (turnips * turnipPrice) - feeBells - (this.turnipCost * this.numberOfTurnips);
     },
   },
 };
