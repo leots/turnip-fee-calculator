@@ -67,7 +67,7 @@
 
       <!--Delete btn-->
       <b-col sm="1">
-        <b-btn variant="danger" size="sm" @click="offers = offers.filter(e => e !== offer)">
+        <b-btn variant="danger" @click="offers = offers.filter(e => e !== offer)">
           <b-icon-trash/>
         </b-btn>
       </b-col>
