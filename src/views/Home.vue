@@ -41,32 +41,58 @@
     </b-row>
 
     <b-row v-for="offer in offers" :key="offer.key">
-      <!--Fee type-->
-      <b-col sm="1">
-        <label>Fee Type</label>
-      </b-col>
-      <b-col sm="2">
-        <b-form-select v-model="offer.feeType" :options="feeTypes"></b-form-select>
+      <!--Name-->
+      <b-col cols="3">
+        <b-row>
+          <b-col cols="4">
+            <label>User</label>
+          </b-col>
+          <b-col cols="8">
+            <b-form-input v-model="offer.name" type="text"></b-form-input>
+          </b-col>
+        </b-row>
       </b-col>
 
-      <!--Fee amount-->
-      <b-col sm="2">
-        <label>Fee Amount</label>
-      </b-col>
-      <b-col sm="2">
-        <b-form-input v-model="offer.feeAmount" type="number"></b-form-input>
+      <!--Fee amount & type-->
+      <b-col cols="4">
+        <b-row>
+          <b-col cols="2">
+            <label>Fee</label>
+          </b-col>
+
+          <!--Amount-->
+          <b-col cols="5">
+            <b-form-input v-model="offer.feeAmount" type="number"></b-form-input>
+          </b-col>
+
+          <!--Type-->
+          <b-col cols="5">
+            <b-form-select v-model="offer.feeType" :options="feeTypes"></b-form-select>
+          </b-col>
+        </b-row>
       </b-col>
 
       <!--Selling price-->
-      <b-col sm="2">
-        <label>Selling price</label>
-      </b-col>
-      <b-col sm="2">
-        <b-form-input v-model="offer.sellingPrice" type="number"></b-form-input>
+      <b-col cols="4">
+        <b-row>
+          <b-col cols="5">
+            <label>Selling price</label>
+          </b-col>
+          <b-col cols="7">
+            <b-input-group>
+              <template v-slot:append>
+                <b-input-group-text>
+                  <b-icon-bell></b-icon-bell>
+                </b-input-group-text>
+              </template>
+              <b-form-input v-model="offer.sellingPrice" type="number"></b-form-input>
+            </b-input-group>
+          </b-col>
+        </b-row>
       </b-col>
 
       <!--Delete btn-->
-      <b-col sm="1">
+      <b-col cols="1">
         <b-btn variant="danger" @click="offers = offers.filter(e => e !== offer)">
           <b-icon-trash/>
         </b-btn>
@@ -129,6 +155,7 @@ export default {
       this.offers.push(
         {
           key: this.offers.length > 0 ? this.offers[this.offers.length - 1].key + 1 : 0,
+          name: '',
           feeType: 'nmt',
           feeAmount: 1,
           sellingPrice: null,
