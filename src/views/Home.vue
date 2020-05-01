@@ -108,7 +108,7 @@
 
     <b-row v-for="offer in offers" :key="'result' + offer.key">
       <b-col>
-        Profit
+        <b>{{ offer.name }}</b> Profit
       </b-col>
       <b-col>
         {{ profit(offer).toLocaleString() }}
