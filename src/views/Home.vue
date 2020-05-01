@@ -164,14 +164,31 @@ export default {
       );
     },
     profit(offer) {
-      // - bells spent on turnips
-      // - fee
-      // + turnips * price
+      // Calculate how many inventory slots the fee will take up so we know how many turnips
+      // we can carry & sell
+      let feeSlots = 0;
+      const feeAmount = parseInt(offer.feeAmount, 10);
+      if (offer.feeType === 'nmt') {
+        // Every 10 NMT we take up one inventory slot
+        feeSlots = Math.ceil(feeAmount / 10);
+      } else if (offer.feeType === 'bells' && feeAmount > 99000) {
+        // For every 99k bells after the 1st 99k, we take up an inventory slot
+        feeSlots = Math.ceil((feeAmount - 99000) / 99000);
+      }
+
+      // Find out the amount of turnips we can sell based on the inventory slots
       const turnips = parseInt(this.numberOfTurnips, 10);
+      const maxSellableTurnips = 4000 - (feeSlots * 100);
+      const sellableTurnips = turnips < maxSellableTurnips ? turnips : maxSellableTurnips;
+
       const turnipPrice = parseInt(offer.sellingPrice, 10);
       const feeBells = offer.feeType === 'nmt' ? offer.feeAmount * this.bellsPerNMT : offer.feeAmount;
 
-      return (turnips * turnipPrice) - feeBells - (this.turnipCost * this.numberOfTurnips);
+      // Calculate final amount:
+      // - bells spent on turnips
+      // - fee
+      // + turnips we can carry * price
+      return (sellableTurnips * turnipPrice) - feeBells - (this.turnipCost * this.numberOfTurnips);
     },
   },
 };
