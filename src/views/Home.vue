@@ -66,6 +66,7 @@
           </b-col>
 
           <!--Type-->
+          <!--todo: this could be made into a dropdown merged with the amount...-->
           <b-col cols="5">
             <b-form-select v-model="offer.feeType" :options="feeTypes"></b-form-select>
           </b-col>
@@ -110,7 +111,7 @@
         Profit
       </b-col>
       <b-col>
-        {{ profit(offer) }}
+        {{ profit(offer).toLocaleString() }}
       </b-col>
     </b-row>
 
