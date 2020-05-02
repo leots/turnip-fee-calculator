@@ -32,24 +32,34 @@
       </b-col>
     </b-row>
 
+    <!--Offers-->
     <b-row>
       <b-col>
-        <h3>Offers</h3>
-      </b-col>
-      <b-col class="new-offer-col">
-        <b-btn variant="success" @click="newOffer">
-          <b-icon-plus/>
-          New offer
-        </b-btn>
+        <b-card>
+          <!--Card title-->
+          <template v-slot:header>
+            <b-row class="card-header-row">
+              <b-col>
+                <h3 class="mb-0">Offers</h3>
+              </b-col>
+              <b-col class="new-offer-col">
+                <b-btn variant="success" @click="newOffer">
+                  <b-icon-plus/>
+                  New offer
+                </b-btn>
+              </b-col>
+            </b-row>
+          </template>
+
+          <offer v-for="offer in offers"
+                 :key="offer.key"
+                 @delete="offers = offers.filter(e => e !== offer)"
+                 :offer="offer">
+          </offer>
+        </b-card>
       </b-col>
     </b-row>
 
-    <!--Offers input-->
-    <offer v-for="offer in offers"
-           :key="offer.key"
-           @delete="offers = offers.filter(e => e !== offer)"
-           :offer="offer">
-    </offer>
 
     <!--Profit results per offer-->
     <b-row>
@@ -141,6 +151,14 @@ export default {
 <style scoped>
   .row {
     margin-bottom: 10px;
+  }
+
+  .row:last-child {
+    margin-bottom: 0;
+  }
+
+  .row.card-header-row {
+    margin-bottom: 0;
   }
 
   .new-offer-col {
