@@ -19,6 +19,10 @@
       </b-col>
     </b-row>
 
+    <!--todo: add fee paid for buying turnips-->
+    <!--todo: add quick calculation for selected turnip price * turnips amount gia na vlepeis posa
+    na kaneis withdraw apo to ABD-->
+
     <b-row>
       <b-col sm="3">
         <label for="bells-per-nmt">Price of a NMT in bells:</label>
@@ -40,66 +44,14 @@
       </b-col>
     </b-row>
 
-    <b-row v-for="offer in offers" :key="offer.key">
-      <!--Name-->
-      <b-col cols="3">
-        <b-row>
-          <b-col cols="4">
-            <label>User</label>
-          </b-col>
-          <b-col cols="8">
-            <b-form-input v-model="offer.name" type="text"></b-form-input>
-          </b-col>
-        </b-row>
-      </b-col>
+    <!--Offers input-->
+    <offer v-for="offer in offers"
+           :key="offer.key"
+           @delete="offers = offers.filter(e => e !== offer)"
+           :offer="offer">
+    </offer>
 
-      <!--Fee amount & type-->
-      <b-col cols="4">
-        <b-row>
-          <b-col cols="2">
-            <label>Fee</label>
-          </b-col>
-
-          <!--Amount-->
-          <b-col cols="5">
-            <b-form-input v-model="offer.feeAmount" type="number"></b-form-input>
-          </b-col>
-
-          <!--Type-->
-          <!--todo: this could be made into a dropdown merged with the amount...-->
-          <b-col cols="5">
-            <b-form-select v-model="offer.feeType" :options="feeTypes"></b-form-select>
-          </b-col>
-        </b-row>
-      </b-col>
-
-      <!--Selling price-->
-      <b-col cols="4">
-        <b-row>
-          <b-col cols="5">
-            <label>Selling price</label>
-          </b-col>
-          <b-col cols="7">
-            <b-input-group>
-              <template v-slot:append>
-                <b-input-group-text>
-                  <b-icon-bell></b-icon-bell>
-                </b-input-group-text>
-              </template>
-              <b-form-input v-model="offer.sellingPrice" type="number"></b-form-input>
-            </b-input-group>
-          </b-col>
-        </b-row>
-      </b-col>
-
-      <!--Delete btn-->
-      <b-col cols="1">
-        <b-btn variant="danger" @click="offers = offers.filter(e => e !== offer)">
-          <b-icon-trash/>
-        </b-btn>
-      </b-col>
-    </b-row>
-
+    <!--Profit results per offer-->
     <b-row>
       <b-col>
         <h3>Results</h3>
@@ -127,27 +79,19 @@
 <script>
 // @ is an alias to /src
 import TurnipChart from '@/components/TurnipChart.vue';
+import Offer from '@/components/Offer.vue';
 
 export default {
   name: 'Home',
   components: {
     TurnipChart,
+    Offer,
   },
   data() {
     return {
       numberOfTurnips: 4000,
       bellsPerNMT: 100000,
       turnipCost: 95,
-      feeTypes: [
-        {
-          value: 'nmt',
-          text: 'NMT',
-        },
-        {
-          value: 'bells',
-          text: 'Bells',
-        },
-      ],
       offers: [],
     };
   },
