@@ -1,36 +1,48 @@
 <template>
   <div class="home">
     <b-row>
-      <b-col sm="3">
-        <label for="number-of-turnips"># of turnips:</label>
-      </b-col>
-      <b-col sm="3">
-        <b-form-input id="number-of-turnips" v-model="numberOfTurnips" type="number"></b-form-input>
-      </b-col>
-      <b-col sm="3">
-        <label for="cost-of-turnips">Cost of 1 turnip: {{ turnipCost }} Bells</label>
-      </b-col>
-      <b-col sm="3">
-        <b-form-input id="cost-of-turnips"
-                      v-model="turnipCost"
-                      min="85"
-                      max="100"
-                      type="range"></b-form-input>
+      <b-col>
+        <b-card title="">
+          <template v-slot:header>
+            <h4 class="mb-0">Owned Turnips</h4>
+          </template>
+
+          <b-row>
+            <b-col sm="3">
+              <label for="number-of-turnips"># of turnips:</label>
+            </b-col>
+            <b-col sm="3">
+              <b-form-input id="number-of-turnips" v-model="numberOfTurnips" type="number">
+              </b-form-input>
+            </b-col>
+            <b-col sm="3">
+              <label for="cost-of-turnips">Cost of 1 turnip: {{ turnipCost }} Bells</label>
+            </b-col>
+            <b-col sm="3">
+              <b-form-input id="cost-of-turnips"
+                            v-model="turnipCost"
+                            min="85"
+                            max="100"
+                            type="range"></b-form-input>
+            </b-col>
+          </b-row>
+
+          <b-row>
+            <b-col sm="3">
+              <label for="bells-per-nmt">Price of a NMT in bells:</label>
+            </b-col>
+            <b-col sm="9">
+              <b-form-input id="bells-per-nmt" v-model="bellsPerNMT" type="number"></b-form-input>
+            </b-col>
+          </b-row>
+        </b-card>
       </b-col>
     </b-row>
+
 
     <!--todo: add fee paid for buying turnips-->
     <!--todo: add quick calculation for selected turnip price * turnips amount gia na vlepeis posa
     na kaneis withdraw apo to ABD-->
-
-    <b-row>
-      <b-col sm="3">
-        <label for="bells-per-nmt">Price of a NMT in bells:</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-input id="bells-per-nmt" v-model="bellsPerNMT" type="number"></b-form-input>
-      </b-col>
-    </b-row>
 
     <!--Offers-->
     <b-row>
@@ -40,10 +52,10 @@
           <template v-slot:header>
             <b-row class="card-header-row">
               <b-col>
-                <h3 class="mb-0">Offers</h3>
+                <h4 class="mb-0">Offers</h4>
               </b-col>
               <b-col class="new-offer-col">
-                <b-btn variant="success" @click="newOffer">
+                <b-btn variant="success" @click="newOffer" size="sm">
                   <b-icon-plus/>
                   New offer
                 </b-btn>
